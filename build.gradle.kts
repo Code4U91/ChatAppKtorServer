@@ -45,6 +45,9 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.18")
 
     implementation("io.grpc:grpc-netty-shaded:1.61.0")
+    implementation("io.grpc:grpc-protobuf:1.61.0")
+    implementation("io.grpc:grpc-stub:1.61.0")
+    implementation("com.google.api.grpc:grpc-google-common-protos:2.26.0")
 
 
 }
@@ -55,6 +58,11 @@ tasks.test {
 kotlin {
     jvmToolchain(17)
 }
+
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    mergeServiceFiles()
+}
+
 
 
 
