@@ -1,19 +1,32 @@
 package chatAppServer.fcm
 
+import chatAppServer.FIREBASE_ADMIN_JSON
+import chatAppServer.FIREBASE_DATABASE_URL
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
-import java.io.FileInputStream
+import java.io.ByteArrayInputStream
+import java.io.InputStream
+import java.util.*
 
 
 object FirebaseUtil {
 
     fun initFirebase() {
         if (FirebaseApp.getApps().isEmpty()) {
-            val serviceAccount = FileInputStream("secrets/serviceAccountKey.json")
+
+            val firebaseAdminJsonBase64 = System.getenv(FIREBASE_ADMIN_JSON)
+            if (firebaseAdminJsonBase64.isNullOrEmpty())
+            {
+                throw IllegalStateException("Firebase Admin JSON is missing in environment variables.")
+            }
+
+            val decodedJson = String(Base64.getDecoder().decode(firebaseAdminJsonBase64))
+            val serviceAccount: InputStream = ByteArrayInputStream(decodedJson.toByteArray())
+
             val options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://chatsapp-5407a-default-rtdb.firebaseio.com/")
+                .setDatabaseUrl(FIREBASE_DATABASE_URL)
                 .build()
 
             FirebaseApp.initializeApp(options)
