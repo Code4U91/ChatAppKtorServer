@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.serialization") version "2.1.20"
@@ -58,15 +60,18 @@ tasks.named<Jar>("jar") {
     enabled = false
 }
 
-tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+// Configure the shadowJar to produce the desired output
+tasks.named<ShadowJar>("shadowJar") {
     archiveBaseName.set("ChatAppKtorServer")
     archiveClassifier.set("")
     archiveVersion.set("1.0-SNAPSHOT")
 }
 
+// Ensure build depends on shadowJar
 tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
 }
+
 
 
 
