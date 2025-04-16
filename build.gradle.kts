@@ -60,5 +60,9 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
         attributes["Main-Class"] = "chatAppServer.server.ApplicationKt"
     }
 }
+tasks.named("startScripts") {
+    dependsOn(tasks.named("shadowJar"))
+}
+
 
 
