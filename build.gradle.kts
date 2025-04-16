@@ -54,15 +54,20 @@ kotlin {
     jvmToolchain(17)
 }
 
-tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
-    archiveClassifier.set("")
-    manifest {
-        attributes["Main-Class"] = "chatAppServer.server.ApplicationKt"
-    }
+tasks.named<Jar>("jar") {
+    enabled = false
 }
-tasks.named("startScripts") {
+
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveBaseName.set("ChatAppKtorServer")
+    archiveClassifier.set("")
+    archiveVersion.set("1.0-SNAPSHOT")
+}
+
+tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
 }
+
 
 
 
