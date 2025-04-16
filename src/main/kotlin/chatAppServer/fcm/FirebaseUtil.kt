@@ -24,9 +24,15 @@ object FirebaseUtil {
             val decodedJson = String(Base64.getDecoder().decode(firebaseAdminJsonBase64))
             val serviceAccount: InputStream = ByteArrayInputStream(decodedJson.toByteArray())
 
+            val firebaseDatabaseUrl = System.getenv(FIREBASE_DATABASE_URL)
+
+            if (firebaseDatabaseUrl.isNullOrEmpty())
+            {
+                throw IllegalStateException("Firebase Database URl error.")
+            }
             val options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl(FIREBASE_DATABASE_URL)
+                .setDatabaseUrl(firebaseDatabaseUrl)
                 .build()
 
             FirebaseApp.initializeApp(options)
