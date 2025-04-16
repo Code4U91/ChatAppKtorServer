@@ -1,7 +1,8 @@
 plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.serialization") version "2.1.20"
-    id("io.ktor.plugin") version "3.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    application
 
 
 }
@@ -20,8 +21,8 @@ application{
 
 dependencies {
     // Ktor Server Core
-    implementation("io.ktor:ktor-server-core")
-    implementation("io.ktor:ktor-server-netty")
+    implementation("io.ktor:ktor-server-core:3.1.2")
+    implementation("io.ktor:ktor-server-netty:3.1.2")
 
     // Routing and JSON
     implementation("io.ktor:ktor-server-content-negotiation:3.1.2")
@@ -53,14 +54,11 @@ kotlin {
     jvmToolchain(17)
 }
 
-tasks.withType<Jar> {
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    archiveClassifier.set("")
     manifest {
         attributes["Main-Class"] = "chatAppServer.server.ApplicationKt"
     }
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-
 }
 
 
