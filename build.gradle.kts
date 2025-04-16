@@ -52,3 +52,15 @@ kotlin {
     jvmToolchain(20)
 }
 
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "chatAppServer.server.ApplicationKt"
+    }
+
+
+    from({
+        configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
+    })
+}
+
+
