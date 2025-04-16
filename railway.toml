@@ -1,0 +1,5 @@
+[build]
+buildCommand = "./gradlew shadowJar"
+
+[start]
+command = "java -jar build/libs/<ChatAppKtorServer>-all.jar"
