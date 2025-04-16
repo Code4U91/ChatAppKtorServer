@@ -44,6 +44,8 @@ dependencies {
 
     implementation("ch.qos.logback:logback-classic:1.5.18")
 
+    implementation("io.grpc:grpc-netty-shaded:1.61.0")
+
 
 }
 
