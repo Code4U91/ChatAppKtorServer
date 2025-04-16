@@ -57,6 +57,7 @@ tasks.withType<Jar> {
         attributes["Main-Class"] = "chatAppServer.server.ApplicationKt"
     }
 
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     from({
         configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
