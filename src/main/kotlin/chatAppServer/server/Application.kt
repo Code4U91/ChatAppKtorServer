@@ -13,11 +13,8 @@ import kotlinx.serialization.json.Json
 
 fun main() {
 
-    val portEnv = System.getenv("PORT")
     val port = System.getenv("PORT")?.toIntOrNull() ?: 8080
 
-    println("🛠️ Environment PORT = $portEnv")
-    println("🚀 Server starting on port $port")
     embeddedServer(Netty, port = port, host = "0.0.0.0")
     {
         install(CallLogging)
