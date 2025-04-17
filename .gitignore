@@ -42,6 +42,6 @@ bin/
 .DS_Store
 
 # Firebase secret
-serviceAccountKey.json
-firebase.txt
+encoded.txt
 /secrets/
+serviceAccount.json
