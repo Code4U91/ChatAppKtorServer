@@ -16,8 +16,7 @@ object FirebaseUtil {
         if (FirebaseApp.getApps().isEmpty()) {
 
             val firebaseAdminJsonBase64 = System.getenv(FIREBASE_ADMIN_JSON)
-            if (firebaseAdminJsonBase64.isNullOrEmpty())
-            {
+            if (firebaseAdminJsonBase64.isNullOrEmpty()) {
                 throw IllegalStateException("Firebase Admin JSON is missing in environment variables.")
             }
 
@@ -26,8 +25,7 @@ object FirebaseUtil {
 
             val firebaseDatabaseUrl = System.getenv(FIREBASE_DATABASE_URL)
 
-            if (firebaseDatabaseUrl.isNullOrEmpty())
-            {
+            if (firebaseDatabaseUrl.isNullOrEmpty()) {
                 throw IllegalStateException("Firebase Database URl error.")
             }
             val options = FirebaseOptions.builder()

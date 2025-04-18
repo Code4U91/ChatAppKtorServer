@@ -10,8 +10,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Application.callRoutes()
-{
+fun Application.callRoutes() {
     FirebaseUtil.initFirebase()
 
     routing {
@@ -21,11 +20,11 @@ fun Application.callRoutes()
             val uid = call.attributes[FirebaseUidKey]
             val request = call.receive<CallNotificationRequest>()
 
-            if (uid != request.senderId){
-                call.respond(HttpStatusCode.Forbidden,"SenderId does not match authenticated user")
+            if (uid != request.senderId) {
+                call.respond(HttpStatusCode.Forbidden, "SenderId does not match authenticated user")
                 return@post
             }
-             handleCallNotification(request)
+            handleCallNotification(request)
             call.respond(HttpStatusCode.OK)
         }
     }

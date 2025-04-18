@@ -15,8 +15,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 
-suspend fun handleCallNotification(request: CallNotificationRequest)
-{
+suspend fun handleCallNotification(request: CallNotificationRequest) {
 
     val senderName = getSenderName(request.senderId)
     val receiverTokens = getFcmTokens(request.receiverId)
@@ -57,8 +56,7 @@ suspend fun handleMessageNotification(request: MessageNotificationRequest) {
         "senderName" to senderName,
         "message" to messageBody
     )
-    if (messageStatus != "seen" && activeChatId != request.chatId)
-    {
+    if (messageStatus != "seen" && activeChatId != request.chatId) {
         val invalidTokens = sendMulticastNotification(
             tokens = receiverTokens,
             data = payload
@@ -125,6 +123,7 @@ suspend fun getSenderName(senderId: String): String {
 
     return doc.getString("name") ?: "Unknown"
 }
+
 suspend fun getMessageStatus(chatId: String, messageId: String): String {
     val db = FirestoreClient.getFirestore()
     val doc = db.collection(CHATS_COLLECTION).document(chatId).collection(MESSAGE_COLLECTION)
@@ -179,7 +178,6 @@ suspend fun getFcmTokens(userId: String): List<String> {
 
     return doc.get("fcmTokens") as? List<String> ?: emptyList()
 }
-
 
 
 suspend fun <T> ApiFuture<T>.await(): T = withContext(Dispatchers.IO) { get() }

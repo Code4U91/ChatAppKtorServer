@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-application{
+application {
     mainClass.set("chatAppServer.server.ApplicationKt")
 }
 
