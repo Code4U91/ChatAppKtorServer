@@ -109,6 +109,8 @@ suspend fun removeInvalidFcmTokens(userId: String, tokensToRemove: List<String>)
     val userRef = db.collection(USERS_COLLECTION).document(userId)
 
     val snapshot = userRef.get().await()
+
+    @Suppress("UNCHECKED_CAST")
     val currentTokens = snapshot.get("fcmTokens") as? List<String> ?: return
 
     val updatedTokens = currentTokens.filterNot { tokensToRemove.contains(it) }
@@ -176,6 +178,7 @@ suspend fun getFcmTokens(userId: String): List<String> {
     val db = FirestoreClient.getFirestore()
     val doc = db.collection(USERS_COLLECTION).document(userId).get().await()
 
+    @Suppress("UNCHECKED_CAST")
     return doc.get("fcmTokens") as? List<String> ?: emptyList()
 }
 
