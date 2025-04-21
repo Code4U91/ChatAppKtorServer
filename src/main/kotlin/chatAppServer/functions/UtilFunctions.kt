@@ -19,6 +19,7 @@ suspend fun handleCallNotification(request: CallNotificationRequest) {
 
     val senderName = getSenderName(request.senderId)
     val receiverTokens = getFcmTokens(request.receiverId)
+    val profileImage = getSenderImage(request.senderId)
 
     val payload = mapOf(
         "type" to "call",
@@ -26,7 +27,8 @@ suspend fun handleCallNotification(request: CallNotificationRequest) {
         "callType" to request.callType,
         "senderId" to request.senderId,
         "senderName" to senderName,
-        "channelName" to request.channelName
+        "channelName" to request.channelName,
+        "profileImage" to profileImage
     )
 
     val invalidTokens = sendMulticastNotification(receiverTokens, payload)
