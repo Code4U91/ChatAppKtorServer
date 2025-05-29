@@ -5,6 +5,9 @@ FROM gradle:8.4.0-jdk17 AS builder
 COPY . /app
 WORKDIR /app
 
+# Make gradlew executable
+RUN chmod +x ./gradlew
+
 # Build the Ktor server (adjust for your project)
 RUN ./gradlew installDist
 
