@@ -42,7 +42,7 @@ suspend fun handleMessageNotification(request: MessageNotificationRequest) {
 
 
     val senderName = getSenderName(request.senderId)
-    val messageBody = getMessageBody(request.chatId, request.messageId)
+    val messageBody = getMessageBody(request.chatId, request.messageId, request.receiverId)
     val receiverTokens = getFcmTokens(request.receiverId)
     val profileImage = getSenderImage(request.senderId)
     val messageStatus = getMessageStatus(request.chatId, request.messageId)
@@ -166,9 +166,11 @@ suspend fun getSenderImage(senderId: String): String {
 
 }
 
-suspend fun getMessageBody(chatId: String, messageId: String): String {
+suspend fun getMessageBody(chatId: String, messageId: String, receiverId: String): String {
     val db = FirestoreClient.getFirestore()
-    val doc = db.collection(CHATS_COLLECTION).document(chatId).collection(MESSAGE_COLLECTION)
+    val doc = db.collection(USERS_COLLECTION).document(receiverId)
+        .collection(CHATS_COLLECTION).document(chatId)
+        .collection(MESSAGE_COLLECTION)
         .document(messageId).get().await()
 
     return doc.getString("messageContent") ?: "New Message"
