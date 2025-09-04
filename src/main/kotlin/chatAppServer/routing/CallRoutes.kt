@@ -2,7 +2,6 @@ package chatAppServer.routing
 
 import chatAppServer.CallNotificationRequest
 import chatAppServer.FirebaseUidKey
-import chatAppServer.fcm.FirebaseUtil
 import chatAppServer.functions.handleCallNotification
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -11,7 +10,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.callRoutes() {
-    FirebaseUtil.initFirebase()
 
     routing {
 

@@ -1,6 +1,7 @@
 package chatAppServer.server
 
 import chatAppServer.configureFirebaseAuth
+import chatAppServer.fcm.FirebaseUtil
 import chatAppServer.routing.callRoutes
 import chatAppServer.routing.messageRoutes
 import io.ktor.serialization.kotlinx.json.*
@@ -14,6 +15,7 @@ import kotlinx.serialization.json.Json
 fun main() {
 
     val port = System.getenv("PORT")?.toIntOrNull() ?: 8080
+    FirebaseUtil.initFirebase()
 
     embeddedServer(Netty, port = port, host = "0.0.0.0")
     {
